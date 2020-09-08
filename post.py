@@ -29,7 +29,7 @@ def com_send():
             user_ip=user()
             mess="ip:" + user_ip + "\n" + \
                  "sn:" + sys.argv[1] + "\n" + \
-                 "msg:" + sys.argv[2]
+                 "msg:" + sys.argv[2] + "\n"
             print(mess)
             sock.send(mess.encode('utf-8'))
 
