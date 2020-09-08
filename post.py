@@ -1,9 +1,15 @@
 # -*- coding: utf8 -*-
 
 import socket
+import sys
 
 HOST        = '192.168.11.80'
 PORT        = 51000
+
+if len(sys.argv) != 3:
+    print("Error!!")
+    print("[Usage:] python3 post.py 学籍番号 message")
+    sys.exit()
 
 def user():
     s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
@@ -12,7 +18,7 @@ def user():
     s.close()
     return ip
 
-def com_send(mess):
+def com_send():
     while True:
         try:
             # 通信の確立
@@ -21,7 +27,9 @@ def com_send(mess):
 
             # メッセージ送信
             user_ip=user()
-            mess="ip:" + user_ip + "\nmsg:" + mess
+            mess="ip:" + user_ip + "\n" + \
+                 "sn:" + sys.argv[1] + "\n" + \
+                 "msg:" + sys.argv[2]
             print(mess)
             sock.send(mess.encode('utf-8'))
 
@@ -30,8 +38,9 @@ def com_send(mess):
             break
 
         except:
-            print ('retry: ' + mess)
+            print('Error!!')
+            print('send to failed... ')
             break
 
 if __name__ == "__main__":
-    com_send("hoge")
+    com_send()
